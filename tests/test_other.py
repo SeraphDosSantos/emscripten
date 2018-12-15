@@ -895,6 +895,7 @@ f.close()
     # Case 4: emulate so it works
     test(['-O1', '-s', 'EMULATE_FUNCTION_POINTER_CASTS=1'], 'my func\n')
 
+  @no_wasm_backend('EMULATED_FUNCTION_POINTERS not support with wasm backend')
   def test_emulate_function_pointer_casts_assertions_2(self):
     # check empty tables work with assertions 2 in this mode (#6554)
     run_process([PYTHON, EMCC, path_from_root('tests', 'hello_world.c'), '-s', 'EMULATED_FUNCTION_POINTERS=1', '-s', 'ASSERTIONS=2'])
@@ -3937,6 +3938,8 @@ int main() {
                 if emulate_casts:
                   cmd += ['-s', 'EMULATE_FUNCTION_POINTER_CASTS=1']
                 if emulate_fps:
+                  if self.is_wasm_backend():
+                    continue
                   cmd += ['-s', 'EMULATED_FUNCTION_POINTERS=1']
                 if relocate:
                   cmd += ['-s', 'RELOCATABLE=1'] # disables asm-optimized safe heap
@@ -7989,8 +7992,8 @@ int main() {
       print('test on libc++: see effects of emulated function pointers')
       test(path_from_root('tests', 'hello_libcxx.cpp'), [
         (['-O2'], 42, ['assert'], ['waka'], 348370,  28,  220, 723), # noqa
-        (['-O2', '-s', 'EMULATED_FUNCTION_POINTERS=1'],
-                  42, ['assert'], ['waka'], 348249,  28,  220, 723), # noqa
+      #  (['-O2', '-s', 'EMULATED_FUNCTION_POINTERS=1'],
+      #            42, ['assert'], ['waka'], 348249,  28,  220, 723), # noqa
       ]) # noqa
 
   # ensures runtime exports work, even with metadce

@@ -255,6 +255,8 @@ class TestCoreBase(RunnerCore):
     # extra coverages
     for emulate_casts in [0, 1]:
       for emulate_fps in [0, 1, 2]:
+        if emulate_fps and self.is_wasm_backend():
+          continue
         print(emulate_casts, emulate_fps)
         self.set_setting('EMULATE_FUNCTION_POINTER_CASTS', emulate_casts)
         self.set_setting('EMULATED_FUNCTION_POINTERS', emulate_fps)
