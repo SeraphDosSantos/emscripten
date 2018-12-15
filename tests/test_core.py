@@ -6671,7 +6671,7 @@ return malloc(size);
     self.do_run_from_file(src, expected)
 
     if self.get_setting('ASM_JS'):
-      self.set_setting('RESERVED_FUNCTION_POINTERS', 0)
+      self.clear_setting('RESERVED_FUNCTION_POINTERS')
       self.do_run(open(src).read(), '''Finished up all reserved function pointers. Use a higher value for RESERVED_FUNCTION_POINTERS.''')
       generated = open('src.cpp.o.js').read()
       assert 'jsCall_' not in generated

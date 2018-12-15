@@ -298,6 +298,8 @@ var ALIASING_FUNCTION_POINTERS = 0;
 // array with a Table. However, Tables have some limitations currently, like not
 // being able to assign an arbitrary JS method to them, which we have yet to
 // work around.
+// wasm-backend:
+// This setting is not currently supported with the wasm backend.
 var EMULATED_FUNCTION_POINTERS = 0;
 
 // Allows function pointers to be cast, wraps each call of an incorrect type
